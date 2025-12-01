@@ -1,0 +1,23 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} Define s values}
+\PYG{n}{s} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{linspace}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{10}\PYG{p}{,} \PYG{l+m+mi}{100}\PYG{p}{)}
+\PYG{n}{phi\PYGZus{}fixed} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{pi} \PYG{o}{/} \PYG{l+m+mi}{4}  \PYG{c+c1}{\PYGZsh{} 45 degrees}
+
+\PYG{c+c1}{\PYGZsh{} Compute F\PYGZus{}s, F\PYGZus{}phi, and F\PYGZus{}z}
+\PYG{n}{F\PYGZus{}s\PYGZus{}b} \PYG{o}{=} \PYG{l+m+mi}{40} \PYG{o}{/} \PYG{p}{(}\PYG{n}{s}\PYG{o}{*}\PYG{o}{*}\PYG{l+m+mi}{2} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{+} \PYG{l+m+mi}{3} \PYG{o}{*} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{)}
+\PYG{n}{F\PYGZus{}phi\PYGZus{}b} \PYG{o}{=} \PYG{l+m+mi}{0}  \PYG{c+c1}{\PYGZsh{} Since cos(45) \PYGZhy{} sin(45) = 0}
+\PYG{n}{F\PYGZus{}z\PYGZus{}b} \PYG{o}{=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{2}
+
+\PYG{c+c1}{\PYGZsh{} Compute magnitude |F|}
+\PYG{n}{F\PYGZus{}mag\PYGZus{}b} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{n}{F\PYGZus{}s\PYGZus{}b}\PYG{o}{*}\PYG{o}{*}\PYG{l+m+mi}{2} \PYG{o}{+} \PYG{n}{F\PYGZus{}phi\PYGZus{}b}\PYG{o}{*}\PYG{o}{*}\PYG{l+m+mi}{2} \PYG{o}{+} \PYG{n}{F\PYGZus{}z\PYGZus{}b}\PYG{o}{*}\PYG{o}{*}\PYG{l+m+mi}{2}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Plot}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{figure}\PYG{p}{(}\PYG{n}{figsize}\PYG{o}{=}\PYG{p}{(}\PYG{l+m+mi}{8}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{)}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{s}\PYG{p}{,} \PYG{n}{F\PYGZus{}mag\PYGZus{}b}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+sa}{r}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZdl{}|}\PYG{l+s+s1}{\PYGZbs{}}\PYG{l+s+s1}{mathbf}\PYG{l+s+si}{\PYGZob{}F\PYGZcb{}}\PYG{l+s+s1}{|\PYGZdl{} as function of \PYGZdl{}s\PYGZdl{} (\PYGZdl{}}\PYG{l+s+s1}{\PYGZbs{}}\PYG{l+s+s1}{phi=45\PYGZca{}}\PYG{l+s+s1}{\PYGZbs{}}\PYG{l+s+s1}{circ\PYGZdl{})}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{xlabel}\PYG{p}{(}\PYG{l+s+sa}{r}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZdl{}s\PYGZdl{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{ylabel}\PYG{p}{(}\PYG{l+s+sa}{r}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZdl{}|}\PYG{l+s+s1}{\PYGZbs{}}\PYG{l+s+s1}{mathbf}\PYG{l+s+si}{\PYGZob{}F\PYGZcb{}}\PYG{l+s+s1}{|\PYGZdl{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{title}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Magnitude of F as a function of s (φ=45°)}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{legend}\PYG{p}{(}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{grid}\PYG{p}{(}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{show}\PYG{p}{(}\PYG{p}{)}
+\end{MintedVerbatim}

@@ -1,0 +1,950 @@
+\documentclass[a4paper]{article}
+\usepackage{xcolor}  % For colors
+\usepackage{graphicx}  % For images
+\usepackage{titlesec}  % For title formatting
+\usepackage{geometry}  % Adjust margins
+\usepackage{circuitikz}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{esint}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage{siunitx}
+
+\tcbuselibrary{breakable}
+\geometry{top=1in, bottom=1in, left=1in, right=1in}
+
+\begin{document}
+
+% Define colors
+\definecolor{myblue}{RGB}{30, 144, 255}
+\definecolor{myred}{RGB}{255, 69, 0}
+\definecolor{mygreen}{RGB}{60, 179, 113}
+\definecolor{honey}{RGB}{255, 204, 0} 
+
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+    
+    % University Name
+    {\Huge \textbf{\textcolor{myblue}{IIT Hyderabad}}}\\[1cm]
+    
+    % Department
+    
+    {\large \textbf{\textcolor{myred}{Department of Electrical Engineering}}}\\[1.5cm]
+    
+% Assignment Title
+\begin{tcolorbox}[colframe=myred, colback=myblue!10, sharp corners=south, width=0.85\textwidth, center]
+    \centering
+    {\huge \textbf{\textcolor{myblue}{Electromagnetics Assignment}}}\\[0.3cm]
+    {\large \textbf{\textcolor{black}{Advanced Concepts and Applications}}}
+\end{tcolorbox}
+
+% Add some vertical space after the tcolorbox
+\vspace{1.5cm}
+    
+    
+    % Submitted by
+    {\Large \textbf{Submitted by:}}\\[0.3cm]
+    {\Large \textbf{\textcolor{mygreen}{Krishna Patil}}}\\
+    {\large \textbf{EE24BTECH11036}}\\[0.5cm]
+    
+    % Submitted to
+    {\Large \textbf{Submitted to:}}\\[0.3cm]
+    {\Large \textbf{\textcolor{myred}{Aneesh Sir}}}\\[1cm]
+    
+    % Date
+    {\large \textbf{Date: \today}}\\[2cm]
+    
+    \vfill
+    
+    % Footer
+    {\Large \textbf{\textcolor{myblue}{Electromagnetics - Semester 2}}}
+    
+\end{titlepage}
+
+\begin{tcolorbox}[colframe=myred, colback=myred!10, sharp corners=south, width=0.95\textwidth, boxrule=0.8mm, breakable]
+    \textbf{Q1: The space between the plates of a parallel-plate capacitor is filled with dielectric material whose dielectric constant varies linearly from 1 at the bottom plate (x = 0) to 2 at the top plate (x = d).The capacitor is connected to a battery of voltage V. Find all the bound charge, and check that the total is zero.}
+\end{tcolorbox}
+
+\begin{figure}[!ht]
+\centering
+\resizebox{0.6\textwidth}{!}{%
+\begin{circuitikz}
+\tikzstyle{every node}=[font=\LARGE]
+\draw [short] (10,16) -- (10,14.75);
+\draw [short] (7.5,14.75) -- (12.5,14.75);
+\draw [short] (7.5,12.25) -- (12.5,12.25);
+\draw [short] (10,12.25) -- (10,11);
+\draw [short] (10,16) -- (16.25,16);
+\draw [short] (10,11) -- (10,9.75);
+\draw [short] (10,9.75) -- (16.25,9.75);
+\draw [short] (16.25,16) -- (16.25,13.5);
+\draw (16.25,13.5) to[american voltage source] (16.25,12.25);
+\draw [short] (16.25,12.25) -- (16.25,9.75);
+\node [font=\LARGE] at (17,13) {V};
+\draw [fill=honey] (7.5,14.5) rectangle (12.5,12.5);
+\draw [dashed] (5.5,12.5) -- (13.5,12.5);
+\draw [dashed] (5.5,14.5) -- (13.5,14.5);
+\node [font=\LARGE] at (4.5,12.5) {x = 0};
+\node [font=\LARGE] at (4.5,14.5) {x = d};
+\node [font=\LARGE] at (13.75,14) {$\epsilon_r$ = 2};
+\node [font=\LARGE] at (13.75,12) {$\epsilon_r$ = 1 };
+\node [font=\LARGE] at (10,13.5) {dielectric};
+\end{circuitikz}
+}%
+\label{fig:my_label}
+\end{figure}
+
+\begin{tcolorbox}[
+    title=Solution,
+    colback=white,
+    colframe=myblue,
+    coltitle=black,
+    fonttitle=\bfseries\large,
+    breakable,
+    enhanced,
+    attach boxed title to top center={yshift=-2mm},
+    boxed title style={colback=myblue!20, colframe=myblue}
+]
+The diagram above shows the problem including the capacitor and circuit.
+
+Since the dielectric constant varies linearly, we can use the boundary values provided to determine the relative permittivity.
+\[
+\epsilon_r(x) = 1 + \frac{x}{d} 
+\]
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+    \hline
+    \textbf{Symbol} & \textbf{Meaning} & \textbf{Formula} \\
+    \hline
+    \( \epsilon_0 \) & Permittivity of free space & \( 8.85 \times 10^{-12} \, \text{F/m} \) \\
+    \( \epsilon_r(x) \) & Relative permittivity (dielectric constant) & \( \epsilon_r(x) = 1 + \frac{x}{d} \) \\
+    \( D \) & Displacement field (independent of dielectric) & \( D = \epsilon_0 \epsilon_r(x) E \) \\
+    \( E(x) \) & Electric field (varies due to \( \epsilon_r(x) \)) & \( E(x) = \frac{D}{\epsilon_0 \epsilon_r(x)} \) \\
+    \( \sigma_{\text{free}} \) & Free charge density on plates & \( \sigma_{\text{free}} = D \) (at \( x = d \)) \\
+    \( \sigma_b \) & Surface bound charge density & \( \sigma_b = \left(1 - \frac{1}{\epsilon_r}\right) \sigma_{\text{free}} \) \\
+    \( \rho_b(x) \) & Volume bound charge density & \( \rho_b = -\nabla \cdot (D - \epsilon_0 E) \) \\
+    \hline
+\end{tabular}
+\end{center}
+
+Since there is no free charge inside the dielectric, \( D \) is constant:
+\[
+D = D \, \hat{x}
+\]
+\[
+V = \int_0^d E(x) \, dx = \frac{D}{\epsilon_0} \int_0^d \frac{dx}{1 + \frac{x}{d}}
+\]
+Let \( u = 1 + \frac{x}{d} \), \( du = \frac{dx}{d} \):
+\[
+V = \frac{D d}{\epsilon_0} \int_1^2 \frac{du}{u} = \frac{D d}{\epsilon_0} \ln 2
+\]
+\[
+\boxed{D = \frac{\epsilon_0 V}{d \ln 2}}
+\]
+
+Bound charge appears where \( \epsilon_r \) changes abruptly (at the surfaces).
+
+At \( x = 0 \):
+\[
+\epsilon_r(0) = 1 \implies \sigma_b(0) = 0
+\]
+(No bound charge here since the dielectric behaves like vacuum.)
+
+At \( x = d \):
+\[
+\sigma_b(d) = \left(1 - \frac{1}{\epsilon_r(d)}\right) \sigma_{\text{free}} = \left(1 - \frac{1}{2}\right) \frac{\epsilon_0 V}{d \ln 2} = \frac{\epsilon_0 V}{2 d \ln 2}
+\]
+But bound charge opposes free charge, so:
+\[
+\boxed{\sigma_b(d) = -\frac{\epsilon_0 V}{2 d \ln 2}}
+\]
+
+Now, we know that,
+\[
+\rho_b(x) = -\nabla \cdot (D - \epsilon_0 E)
+\]
+\[
+\therefore \rho_b(x) = -\epsilon_0 \frac{d}{dx} \left( (\epsilon_r(x) - 1) E(x) \right)
+\]
+\[
+\boxed{\rho_b(x) = -\frac{\epsilon_0 V}{d^2 \ln 2} \frac{1}{(1 + x/d)^2}}
+\]
+
+Surface bound charge:
+\[
+Q_{b,\text{surface}} = \sigma_b(d) \cdot A = \boxed{-\frac{\epsilon_0 V A}{2 d \ln 2}}
+\]
+
+Volume bound charge:
+\[
+Q_{b,\text{volume}} = \int_0^d \rho_b(x) A \, dx = -\frac{\epsilon_0 V A}{d \ln 2} \int_1^2 \frac{du}{u^2} = -\frac{\epsilon_0 V A}{d \ln 2} \left( -\frac{1}{u} \Bigg|_1^2 \right) = \boxed{\frac{\epsilon_0 V A}{2 d \ln 2}}
+\]
+
+Total bound charge:
+\[
+Q_{b,\text{total}} = Q_{b,\text{surface}} + Q_{b,\text{volume}} = -\frac{\epsilon_0 V A}{2 d \ln 2} + \frac{\epsilon_0 V A}{2 d \ln 2} = 0
+\]
+
+\vspace{0.5cm}
+So,
+\begin{itemize}
+    \item Surface bound charge at \( x = d \): \(\sigma_b = -\dfrac{\epsilon_0 V}{2d \ln 2}\)
+    \item Volume bound charge density: \(\rho_b(x) = -\dfrac{\epsilon_0 V}{d^2 \ln 2}\dfrac{1}{(1 + x/d)^2}\)
+    \item Total bound charge is zero, as required
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{1\baselineskip}
+
+\begin{tcolorbox}[colframe=myred, colback=myred!10, sharp corners=south, width=0.95\textwidth, boxrule=0.8mm, breakable]
+    \textbf{Q2: An electric dipole p, pointing in the y direction, is placed midway between two large conducting plates, as shown in Fig. 1. Each plate makes a small angle $\theta$ with respect to the x axis, and they are maintained at potentials $\pm V$ . What is the direction of the net force on p? Draw the diagram to justify your answer.}
+\end{tcolorbox}
+\begin{figure}[!ht]
+\centering
+\resizebox{0.3\textwidth}{!}{%
+\begin{circuitikz}
+\tikzstyle{every node}=[font=\Large]
+\draw [line width=2pt, ->, >=Stealth] (0,14.75) -- (13.75,14.75);
+\draw [line width=2pt, ->, >=Stealth] (1.25,7.5) -- (1.25,22.25);
+\draw [line width=2pt, dashed] (1.25,14.75) -- (3.25,14.75);
+\draw [line width=0.2pt, dashed] (1.25,14.75) -- (5,17.25);
+\draw [line width=0.2pt, dashed] (1.25,14.75) -- (5,12.25);
+\draw [ color={rgb,255:red,38; green,15; blue,215}, line width=1.8pt, short] (5,17.25) -- (10,21);
+\draw [ color={rgb,255:red,38; green,15; blue,215}, line width=1.8pt, short] (5,12.25) -- (10,8.5);
+\draw [ color={rgb,255:red,5; green,5; blue,5}, line width=1.8pt, ->, >=Stealth] (7.5,13.5) -- (7.5,16);
+\node [font=\Large, color={rgb,255:red,5; green,5; blue,5}] at (8.25,15.5) {\textbf{p}};
+\node [font=\Large, color={rgb,255:red,5; green,5; blue,5}] at (6.25,19.75) {\textbf{+V}};
+\node [font=\Large, color={rgb,255:red,5; green,5; blue,5}] at (6,9.75) {\textbf{-V}};
+\node [font=\Large, color={rgb,255:red,5; green,5; blue,5}] at (3.25,14) {\textbf{$\theta$}};
+\node [font=\Large, color={rgb,255:red,5; green,5; blue,5}] at (3.25,15.25) {\textbf{$\theta$}};
+\node [font=\Large, color={rgb,255:red,5; green,5; blue,5}] at (0.75,22.25) {\textbf{y}};
+\node [font=\Large, color={rgb,255:red,5; green,5; blue,5}] at (13.75,14.25) {\textbf{x}};
+\end{circuitikz}
+}%
+\caption{}
+\label{fig:my_label}
+\end{figure}
+
+\begin{tcolorbox}[
+    title=Solution,
+    colback=white,
+    colframe=myblue,
+    coltitle=black,
+    fonttitle=\bfseries\large,
+    breakable,
+    enhanced,
+    attach boxed title to top center={yshift=-2mm},
+    boxed title style={colback=myblue!20, colframe=myblue}
+]
+
+\begin{itemize}
+    \item \textbf{Dipole Orientation:} The dipole $\mathbf{p}$ points in the $y$-direction, i.e., $\mathbf{p} = p \hat{y}$.
+    \item \textbf{Plate Configuration:} The two conducting plates are inclined at a small angle $\theta$ with respect to the $x$-axis and are maintained at potentials $+V$ and $-V$.
+    \item \textbf{Position of Dipole:} The dipole is placed midway between the plates, where the distance between the plates is small compared to their length, creating an approximately uniform electric field in the region near the dipole.
+\end{itemize}
+
+The plates are at potentials $+V$ and $-V$, and the distance between them (along the $y$-direction) is $d$. The electric field $\mathbf{E}$ between two parallel plates is:
+\[
+\mathbf{E} = -\frac{2V}{d} \hat{y},
+\]
+where the factor of 2 arises because the dipole is midway between the plates, and the total potential difference is $2V$.
+
+However, since the plates are inclined at an angle $\theta$, the electric field has both $x$- and $y$-components. For small $\theta$, the dominant component is still in the $y$-direction, with a small $x$-component:
+\[
+\mathbf{E} \approx -\frac{2V}{d} \hat{y} + E_x \hat{x},
+\]
+where $E_x$ arises due to the tilt.
+
+The net force on an electric dipole in an external electric field is given by:
+\[
+\mathbf{F} = (\mathbf{p} \cdot \nabla) \mathbf{E}.
+\]
+Since $\mathbf{p} = p \hat{y}$, this simplifies to:
+\[
+\mathbf{F} = p \frac{\partial \mathbf{E}}{\partial y}.
+\]
+
+\begin{itemize}
+    \item The $y$-component of $\mathbf{E}$ ($E_y = -\frac{2V}{d}$) is \textbf{constant} between the plates (for small $\theta$), so $\frac{\partial E_y}{\partial y} = 0$.
+    \item The $x$-component of $\mathbf{E}$ ($E_x$) \textbf{varies with $y$} because the plates are tilted. As $y$ increases, the distance between the plates changes, altering $E_x$. Thus:
+        \[
+        \frac{\partial E_x}{\partial y} \neq 0.
+        \]
+        For the given tilt, $\frac{\partial E_x}{\partial y}$ is \textbf{negative} (as $y$ increases, $E_x$ decreases).
+\end{itemize}
+
+Therefore, the force components are:
+\[
+F_x = p \frac{\partial E_x}{\partial y} \quad (\text{non-zero, negative}),
+\]
+\[
+F_y = p \frac{\partial E_y}{\partial y} = 0.
+\]
+
+Therefore, the net force on the dipole is in the \textbf{negative $x$-direction}.
+
+\vspace{1\baselineskip}
+
+The below diagram justifies the force direction as required.
+
+\end{tcolorbox}
+
+\begin{figure}[!ht]
+\centering
+\resizebox{1\textwidth}{!}{%
+\begin{circuitikz}
+\tikzstyle{every node}=[font=\Large]
+\draw [line width=2pt, ->, >=Stealth] (0,14.75) -- (13.75,14.75);
+\draw [line width=2pt, ->, >=Stealth] (1.25,7.5) -- (1.25,22.25);
+\draw [line width=2pt, dashed] (1.25,14.75) -- (3.25,14.75);
+\draw [line width=0.2pt, dashed] (1.25,14.75) -- (5,17.25);
+\draw [line width=0.2pt, dashed] (1.25,14.75) -- (5,12.25);
+\draw [ color={rgb,255:red,38; green,15; blue,215}, line width=1.8pt, short] (5,17.25) -- (10,21);
+\draw [ color={rgb,255:red,38; green,15; blue,215}, line width=1.8pt, short] (5,12.25) -- (10,8.5);
+\draw [ color={rgb,255:red,5; green,5; blue,5}, line width=1.8pt, ->, >=Stealth] (7.5,13.5) -- (7.5,16);
+\node [font=\Large, color={rgb,255:red,5; green,5; blue,5}] at (8.25,15.5) {\textbf{p}};
+\node [font=\Large, color={rgb,255:red,5; green,5; blue,5}] at (6.25,19.75) {\textbf{+V}};
+\node [font=\Large, color={rgb,255:red,5; green,5; blue,5}] at (6,9.75) {\textbf{-V}};
+\node [font=\Large, color={rgb,255:red,5; green,5; blue,5}] at (3.25,14) {\textbf{$\theta$}};
+\node [font=\Large, color={rgb,255:red,5; green,5; blue,5}] at (3.25,15.25) {\textbf{$\theta$}};
+\node [font=\Large, color={rgb,255:red,5; green,5; blue,5}] at (0.75,22.25) {\textbf{y}};
+\node [font=\Large, color={rgb,255:red,5; green,5; blue,5}] at (13.75,14.25) {\textbf{x}};
+\draw [ color={rgb,255:red,250; green,0; blue,0}, line width=1.8pt, ->, >=Stealth] (7.75,14.75) -- (5,14.75);
+\node [font=\Large, color={rgb,255:red,250; green,0; blue,0}] at (5.25,14.25) {$F_{net}$};
+\draw [ color={rgb,255:red,0; green,250; blue,42}, line width=1.8pt, ->, >=Stealth] (7.25,19) -- (9.25,16.75);
+\draw [line width=0.2pt, short] (7,18.75) -- (7.25,18.5);
+\draw [line width=0.2pt, short] (7.5,18.75) -- (7.25,18.5);
+\node [font=\Large, color={rgb,255:red,13; green,241; blue,9}] at (12.75,18.75) {$E \approx -\frac{2V}{d} \hat{y} + E_x \hat{x}$};
+\end{circuitikz}
+}
+\caption{}
+\label{c}
+\end{figure}
+
+\newpage
+
+\begin{tcolorbox}[colframe=myred, colback=myred!10, sharp corners=south, width=0.95\textwidth, boxrule=0.8mm, breakable]
+    \textbf{Q3: The space between the plates of a parallel-plate capacitor is filled with two slabs of linear dielectric material. Each slab has thickness a, so the total distance between the plates is 2a. Slab 1 has a dielectric constant of 2, and slab 2 has a dielectric constant of 1.5. The free charge density on the top plate is $ \sigma $ and on the bottom plate $ -\sigma $. Draw a figure showing the mentioned situation and find the following.}
+
+\begin{enumerate}[label=\alph*)]
+\item Find the electric displacement D in each slab.
+\item Find the electric field E in each slab.
+\item Find the polarization P in each slab.
+\item Find the potential difference between the plates.
+\item Find the location and amount of all bound charge.
+\item Now that you know all the charge (free and bound), recalculate the field in each slab, and
+confirm your answer to (b).
+\end{enumerate}
+\end{tcolorbox}
+
+\begin{figure}[!ht]
+\centering
+\resizebox{0.6\textwidth}{!}{%
+\begin{circuitikz}
+\tikzstyle{every node}=[font=\LARGE]
+\draw [line width=2pt, short] (7.5,16.25) -- (18.75,16.25);
+\draw [line width=2pt, short] (7.5,10.75) -- (18.75,10.75);
+\draw [ fill={rgb,255:red,255; green,204; blue,0} ] (7.5,16) rectangle (18.75,13.5);
+\draw [ fill={rgb,255:red,8; green,132; blue,226} ] (7.5,13.5) rectangle (18.75,11);
+\draw [<->, >=Stealth] (7,16) -- (7,13.5)node[pos=0.5, fill=white]{\textbf{a}};
+\draw [<->, >=Stealth] (7,13.5) -- (7,11)node[pos=0.5, fill=white]{\textbf{a}};
+\draw [<->, >=Stealth] (6.25,16) -- (6.25,11)node[pos=0.5, fill=white]{\textbf{2a}};
+\node [font=\LARGE] at (19.25,16.5) {\textbf{$\sigma$}};
+\node [font=\LARGE] at (19,10.25) {\textbf{-$\sigma$}};
+\draw [->, >=Stealth] (17,10.5) .. controls (17.5,10) and (17.5,10) .. (18.5,10) ;
+\draw [->, >=Stealth] (17,16.5) .. controls (17.5,17.25) and (17.5,17.75) .. (18.75,16.75) ;
+\node [font=\LARGE] at (13,14.75) {$\epsilon_1 = 2$};
+\node [font=\LARGE] at (13,12.25) {$\epsilon_2 = 1.5$};
+\end{circuitikz}
+}%
+\caption{Diagram}
+\label{d}
+\end{figure}
+
+\begin{tcolorbox}[
+    title=Solution,
+    colback=white,
+    colframe=myblue,
+    coltitle=black,
+    fonttitle=\bfseries\large,
+    breakable,
+    enhanced,
+    attach boxed title to top center={yshift=-2mm},
+    boxed title style={colback=myblue!20, colframe=myblue}
+]
+\begin{tcolorbox}[
+    title=Part (a),
+    colframe=cyan!60, 
+    colback=cyan!10,
+    coltitle=black,
+    fonttitle=\bfseries\large,
+    breakable,
+    enhanced,
+    attach boxed title to top center={yshift=-2mm},
+    boxed title style={colback=cyan!10, colframe=cyan!60}
+]
+We know that, the displacement vector $ \vec{D} $ is related to free charge density only. Now, since the free charge density of both the slabs is same, so $ \vec{D} $ is same for both slabs. \\
+According to Gauss's law,
+\[
+\oiint_S \vec{D} \cdot d\vec{A} = Q_{\text{free}}
+\]
+
+Consider a Gaussian pillbox enclosing part of the top plate and extending into the dielectric.
+\begin{itemize}
+\item The free charge enclosed is $\sigma A$, where A is the area of the plate.
+\item Since D is uniform, constant and perpendicular to the surface, so the Gauss's law reduces to $ DA = \sigma A $
+\end{itemize}
+So, 
+\[
+\boxed{\vec{D} = \sigma \text{ } \hat{n}}
+\]
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+    title=Part (b),
+    colframe=cyan!60, 
+    colback=cyan!10,
+    coltitle=black,
+    fonttitle=\bfseries\large,
+    breakable,
+    enhanced,
+    attach boxed title to top center={yshift=-2mm},
+    boxed title style={colback=cyan!10, colframe=cyan!60}
+]
+We know that, 
+\[
+\vec{D} = \epsilon_0 \epsilon_r \vec{E}
+\]
+So,
+\begin{itemize}
+\item For slab 1, \newline
+$\sigma \hat{n} = \epsilon_0 (2) \vec{E}_1
+\implies \boxed{\vec{E}_1 = \frac{\sigma}{2\epsilon_0} \hat{n}} $ 
+\item For slab 2, \newline
+$\sigma \hat{n} = \epsilon_0 (1.5) \vec{E}_2
+\implies \boxed{\vec{E}_2 = \frac{2\sigma}{3\epsilon_0} \hat{n}} $ 
+\end{itemize}
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+    title=Part (c),
+    colframe=cyan!60, 
+    colback=cyan!10,
+    coltitle=black,
+    fonttitle=\bfseries\large,
+    breakable,
+    enhanced,
+    attach boxed title to top center={yshift=-2mm},
+    boxed title style={colback=cyan!10, colframe=cyan!60}
+]
+Polarization $\vec{P}$ is related to $\vec{D}$ and $\vec{E} $ by the relation: 
+\[
+\vec{P} = \vec{D} - \epsilon_0 \vec{E}.
+\]
+So, 
+\begin{itemize}
+  \item For slab 1, \newline 
+  $ \vec{P}_1 = \vec{D} - \epsilon_0 \vec{E}_1 
+  \implies \vec{P}_1 = \sigma \hat{n} - \epsilon_0 \left(\frac{\sigma}{2\epsilon_0} \hat{n}\right) $ \newline 
+  $ \boxed{\vec{P}_1 = \frac{\sigma}{2} \hat{n}} $
+ \item For slab 2, \newline 
+  $ \vec{P}_2 = \vec{D} - \epsilon_0 \vec{E}_2 
+  \implies \vec{P}_2 = \sigma \hat{n} - \epsilon_0 \left(\frac{2\sigma}{3\epsilon_0} \hat{n}\right) $ \newline 
+  $ \boxed{\vec{P}_2 = \frac{\sigma}{3} \hat{n}} $
+\end{itemize}
+\end{tcolorbox}
+\begin{tcolorbox}[
+    title=Part (d),
+    colframe=cyan!60, 
+    colback=cyan!10,
+    coltitle=black,
+    fonttitle=\bfseries\large,
+    breakable,
+    enhanced,
+    attach boxed title to top center={yshift=-2mm},
+    boxed title style={colback=cyan!10, colframe=cyan!60}
+]
+The potential difference is the integral of the electric field across the distance between the plates. \\
+Since, the electric field is constant in each slab,
+\[
+\phi = |\vec{E_1}| \cdot a + |\vec{E_2}| \cdot a 
+\]
+\[
+\phi = \frac{\sigma a}{2\epsilon_0} + \frac{2\sigma a}{3\epsilon_0} 
+\]
+\[
+\boxed{\phi = \frac{7\sigma a}{6\epsilon_0}}
+\]
+\end{tcolorbox}
+\begin{tcolorbox}[
+    title=Part (e),
+    colframe=cyan!60, 
+    colback=cyan!10,
+    coltitle=black,
+    fonttitle=\bfseries\large,
+    breakable,
+    enhanced,
+    attach boxed title to top center={yshift=-2mm},
+    boxed title style={colback=cyan!10, colframe=cyan!60}
+]
+Bound charges can be volume or surface charges. \\
+\begin{itemize}
+\item \textbf{Volume Bound Charge:} 
+  \[
+    \rho_b = -\nabla \cdot \vec{P}
+  \]
+  Since $\vec{P}$ is uniform within each slab, $\nabla \cdot \vec{P} = 0 \Rightarrow \boxed{\rho_b = 0}$.
+  
+  \item \textbf{Surface Bound Charge:}
+  \[
+    \sigma_b = \vec{P} \cdot \hat{n}
+  \]
+  where $\hat{n}$ is the unit normal vector pointing out of the dielectric.
+\end{itemize}
+So,
+\begin{itemize}
+  \item \textbf{Top Surface of Slab 1:} Adjacent to the top plate.
+  \begin{itemize}
+    \item $\hat{n}$ points upwards (out of the dielectric).
+    \item $\sigma_{b1} = \vec{P}_1 \cdot \hat{n} = P_1 \cos(180^\circ) = -P_1 = -\frac{\sigma}{2}$
+  \end{itemize}
+  
+  \item \textbf{Bottom Surface of Slab 1 / Top Surface of Slab 2:} Interface between the two slabs.
+  \begin{itemize}
+    \item For Slab 1, $\hat{n}$ points downwards:
+    \[
+      \sigma_{b1,\text{bottom}} = \vec{P}_1 \cdot \hat{n} = P_1 \cos(0^\circ) = P_1 = \frac{\sigma}{2}
+    \]
+    
+    \item For Slab 2, $\hat{n}$ points upwards:
+    \[
+      \sigma_{b2,\text{top}} = \vec{P}_2 \cdot \hat{n} = P_2 \cos(180^\circ) = -P_2 = -\frac{\sigma}{3}
+    \]
+    
+    \item At the interface, the net surface bound charge density is:
+    \[
+      \sigma_{b,\text{interface}} = \sigma_{b1,\text{bottom}} + \sigma_{b2,\text{top}} = \frac{\sigma}{2} - \frac{\sigma}{3} = \frac{\sigma}{6}
+    \]
+
+    \item By definition (discontinuity of polarization):
+    \[
+      \sigma_b = \vec{P}_1 \cdot \hat{n} + \vec{P}_2 \cdot \hat{n} = \frac{\sigma}{2} - \frac{\sigma}{3} = \frac{\sigma}{6}
+    \]
+  \end{itemize}
+  
+  \item \textbf{Bottom Surface of Slab 2:} Adjacent to the bottom plate.
+  \begin{itemize}
+    \item $\hat{n}$ points downwards.
+    \item $\sigma_{b2,\text{bottom}} = \vec{P}_2 \cdot \hat{n} = P_2 \cos(0^\circ) = P_2 = \frac{\sigma}{3}$
+  \end{itemize}
+\end{itemize}
+So, therefore,
+\begin{itemize}
+  \item Top surface of Slab 1: $\boxed{-\frac{\sigma}{2}}$
+  \item Interface between Slab 1 and Slab 2 (net effect): $\boxed{\frac{\sigma}{6}}$
+  \item Bottom surface of Slab 2: $\boxed{\frac{\sigma}{3}}$
+\end{itemize}
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+    title=Part (f),
+    colframe=cyan!60, 
+    colback=cyan!10,
+    coltitle=black,
+    fonttitle=\bfseries\large,
+    breakable,
+    enhanced,
+    attach boxed title to top center={yshift=-2mm},
+    boxed title style={colback=cyan!10, colframe=cyan!60}
+]
+A parallel-plate capacitor contains two slabs of linear dielectric, each of thickness $a$, so the total separation is $2a$. The dielectric constants are:
+\[
+\varepsilon_{r1} = 2 \quad \text{(Slab 1)}, \qquad \varepsilon_{r2} = 1.5 \quad \text{(Slab 2)}
+\]
+The free surface charge densities on the plates are:
+\[
+\sigma_{\text{top}} = +\sigma, \qquad \sigma_{\text{bottom}} = -\sigma
+\]
+
+Using parts (a), (b), (c) and (e), we recalculate the electric field using Gauss's law.
+
+\textbf{Field in Slab 1:}
+
+Take a Gaussian pillbox just below the top plate, inside slab 1.
+
+\begin{itemize}
+    \item Enclosed free charge: $+\sigma$
+    \item Bound surface charge at top: $-\frac{\sigma}{2}$
+\end{itemize}
+
+Total charge enclosed:
+\[
+q_{\text{enc}} = \sigma - \frac{\sigma}{2} = \frac{\sigma}{2}
+\]
+
+\[
+E_1 = \frac{q_{\text{enc}}}{\varepsilon_0} = \frac{\sigma}{2\varepsilon_0}
+\]
+
+This matches our earlier result for $\vec{E}_1$.
+
+\textbf{Field in Slab 2:}
+
+Take a Gaussian surface in slab 2 (between interface and bottom plate).
+
+\begin{itemize}
+    \item Bound surface charge at interface (slab 2 side): $-\frac{\sigma}{6}$
+    \item Bound surface charge at bottom: $+\frac{\sigma}{3}$
+    \item Free surface charge at bottom plate: $-\sigma$
+\end{itemize}
+
+Total charge enclosed:
+\[
+q_{\text{enc}} = -\sigma + \frac{\sigma}{3} - \frac{\sigma}{6} = -\frac{2\sigma}{3}
+\]
+
+\[
+E_2 = \frac{-2\sigma/3}{\varepsilon_0} = -\frac{2\sigma}{3\varepsilon_0}
+\Rightarrow \vec{E}_2 = \frac{2\sigma}{3\varepsilon_0} \hat{z}
+\]
+
+This matches our earlier result for $\vec{E}_2$.
+
+\textbf{Conclusion:}
+
+The recalculated electric fields using all charges (free and bound) are:
+\[
+\vec{E}_1 = \frac{\sigma}{2\varepsilon_0} \hat{z}, \qquad \vec{E}_2 = \frac{2\sigma}{3\varepsilon_0} \hat{z}
+\]
+
+These confirm the values obtained in part (b).
+\end{tcolorbox}
+\end{tcolorbox}
+
+\newpage
+
+\begin{tcolorbox}[colframe=myred, colback=myred!10, sharp corners=south, width=0.95\textwidth, boxrule=0.8mm, breakable]
+    \textbf{Q4: A cube has 5 sides grounded. The sixth side insulated from the others is held at a potential $ V_0 $. What is the potential at the center of the cube? Why?}
+\end{tcolorbox}
+\begin{figure}[!ht]
+\centering
+\resizebox{0.5\textwidth}{!}{%
+\begin{circuitikz}
+\tikzstyle{every node}=[font=\LARGE]
+\draw  (7.5,14.75) rectangle (13.75,8.5);
+\draw  (9.25,12.75) rectangle (15.75,6.5);
+\draw [short] (7.5,8.5) -- (9.25,6.5);
+\draw [short] (7.5,14.75) -- (9.25,12.75);
+\draw [short] (13.75,14.75) -- (15.75,12.75);
+\draw [short] (13.75,8.5) -- (15.75,6.5);
+\node [font=\LARGE] at (11.25,16.75) {$V_0$};
+\draw [->, >=Stealth] (11.75,14.25) .. controls (13,14.5) and (14.75,16) .. (12.25,16.75) ;
+\node at (11.75,10.5) [circ] {};
+\draw [->, >=Stealth] (12,10.5) -- (17.25,10.5);
+\node [font=\LARGE] at (18.25,10.5) {center};
+\draw (8,11) to (6.5,11) node[ground]{};
+\draw (11.75,7.25) to (11.75,5.25) node[ground]{};
+\draw (15,9.25) to (16.25,9.25) node[ground]{};
+\draw (10.5,11.75) to (10.5,11) node[ground]{};
+\draw (12.25,9.5) to (12.5,9.5) node[ground]{};
+\end{circuitikz}
+}%
+
+\label{fig:my_label}
+\end{figure}
+\begin{tcolorbox}[
+    title=Solution,
+    colback=white,
+    colframe=myblue,
+    coltitle=black,
+    fonttitle=\bfseries\large,
+    breakable,
+    enhanced,
+    attach boxed title to top center={yshift=-2mm},
+    boxed title style={colback=myblue!20, colframe=myblue}
+]
+The potential $V(\textbf{r})$ inside the cube satisfies Laplace's equation with mixed boundary conditions:
+
+\[
+\nabla^2 V(\textbf{r}) = 0 \quad \text{for} \quad \textbf{r} \in \text{interior}
+\]
+
+\begin{equation}
+V(\textbf{r}) = \begin{cases}
+0 & \text{on 5 faces} \\
+V_0 & \text{on the insulated face}
+\end{cases}
+\end{equation}
+
+\noindent To solve this boundary value problem:
+
+\begin{enumerate}
+\item \textbf{Uniqueness Theorem}: The solution is unique given the boundary conditions.
+
+\item \textbf{Symmetry Argument}:
+\begin{itemize}
+\item The problem has octahedral symmetry about the center when considering image charges
+\item The potential at the center must be invariant under all symmetry operations of the cube
+\item The only such potential is the average of all boundary values
+\end{itemize}
+
+\item \textbf{Method of Images}:
+\begin{itemize}
+\item We can replace the boundary conditions with an infinite lattice of image cubes
+\item Each image cube alternates between $+V_0$ and $-V_0$ on corresponding faces
+\item At the center, contributions from distant images cancel by symmetry
+\item The dominant term comes from the nearest neighbors, giving $V_0/6$
+\end{itemize}
+
+\end{enumerate}
+
+\subsection{Conclusion}
+The exact potential at the center is:
+\[
+\boxed{V_{\text{center}} = \frac{V_0}{6}}
+\]
+
+\subsection{WHY ?}
+\textbf{Laplace's Equation Requirement:}  
+Inside the charge-free cube, the potential satisfies $\nabla^2 V = 0$. This implies:
+\begin{itemize}
+\item The potential cannot have local maxima or minima (maximum principle)
+\item The potential must smoothly interpolate between boundary values
+\item The value at any point is the average of surrounding values
+\end{itemize}
+
+\textbf{Symmetry Considerations:}  
+For the cubic geometry:
+\begin{itemize}
+\item The center is equidistant from all six faces
+\item The five grounded faces are physically equivalent
+\item The configuration is symmetric under permutation of the grounded faces
+\end{itemize}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colframe=myred, colback=myred!10, sharp corners=south, width=0.95\textwidth, boxrule=0.8mm, breakable]
+    \textbf{Q5: The inside of a grounded spherical metal shell (inner radius $ R_1 $ and outer radius $ R_2 $) is filled with space charge of uniform charge density $ \rho $. Find the electrostatic energy of the system? Find the potential at the center?}
+\end{tcolorbox}
+\begin{figure}[!ht]
+\centering
+\resizebox{0.5\textwidth}{!}{%
+\begin{circuitikz}
+\tikzstyle{every node}=[font=\LARGE]
+\draw [ fill={rgb,255:red,67; green,86; blue,234} ] (12.5,11.25) circle (4.75cm);
+\node at (12.5,11.25) [circ] {};
+\draw [ fill={rgb,255:red,247; green,247; blue,247} ] (12.5,11.25) circle (3cm);
+\node at (12.75,11.25) [circ] {};
+\draw [->, >=Stealth] (12.75,11.25) -- (15.25,10);
+\draw [->, >=Stealth] (12.75,11.25) -- (11.5,15.75);
+\node [font=\LARGE] at (13.75,14.75) {$\rho$};
+\node [font=\LARGE] at (14,11) {$R_1$};
+\node [font=\LARGE] at (12.75,13.5) {$R_2$};
+\draw [short] (17.25,12) -- (19.5,12);
+\draw [short] (19.5,12) -- (19.5,11.25);
+\draw [short] (18.5,11.25) -- (20.5,11.25);
+\draw [short] (18.75,11) -- (20.25,11);
+\draw [short] (19,10.75) -- (20,10.75);
+\draw [short] (19.25,10.5) -- (19.75,10.5);
+\end{circuitikz}
+}%
+
+\label{fig:my_label}
+\end{figure}
+\begin{tcolorbox}[
+    title=Solution,
+    colback=white,
+    colframe=myblue,
+    coltitle=black,
+    fonttitle=\bfseries\large,
+    breakable,
+    enhanced,
+    attach boxed title to top center={yshift=-2mm},
+    boxed title style={colback=myblue!20, colframe=myblue}
+]
+Firstly, we determine the electric field $ \vec{E} $ in the regions using Gauss's Law.
+\paragraph{For $r < R_1$:}
+\[ \vec{E} = 0 \quad \text{(No enclosed charge)} \]
+
+\paragraph{For $R_1 \leq r \leq R_2$:}
+Using Gauss's law:
+\[
+\oint \vec{E} \cdot d\vec{A} = \frac{Q_{\text{enc}}}{\epsilon_0}
+\]
+\[
+E \cdot 4\pi r^2 = \frac{\rho \cdot \frac{4}{3}\pi(r^3 - R_1^3)}{\epsilon_0}
+\]
+\[
+\vec{E} = \frac{\rho(r^3 - R_1^3)}{3\epsilon_0 r^2}\hat{r}
+\]
+
+\paragraph{For $r > R_2$:}
+\[ \vec{E} = 0 \quad \text{(Grounded shell shields external field)} \]
+
+Now, we proceed for determining the electrostatic energy of the system.
+The energy density in $R_1 \leq r \leq R_2$:
+\[
+u = \frac{1}{2}\epsilon_0 E^2 = \frac{\rho^2(r^3-R_1^3)^2}{18\epsilon_0 r^4}
+\]
+
+Total energy:
+\[
+U = \int_{R_1}^{R_2} \frac{\rho^2(r^3-R_1^3)^2}{18\epsilon_0 r^4} \cdot 4\pi r^2 dr
+\]
+\[
+= \frac{2\pi\rho^2}{9\epsilon_0} \int_{R_1}^{R_2} \left(r^4 - 2R_1^3 r + \frac{R_1^6}{r^2}\right) dr
+\]
+\[
+U = \boxed{\frac{2\pi\rho^2}{9\epsilon_0}\left(\frac{R_2^5-R_1^5}{5} - R_1^3(R_2^2-R_1^2) - R_1^6\left(\frac{1}{R_2}-\frac{1}{R_1}\right)\right)}
+\]
+Finally, we determine the electric potential at the center.
+Since $\vec{E} = 0$ for $r < R_1$, $V(0) = V(R_1)$. We calculate $V(R_1)$ by integrating from $R_2$ (where $V=0$) to $R_1$:
+
+\[
+V(R_1) = -\int_{R_2}^{R_1} \frac{\rho(r^3 - R_1^3)}{3\epsilon_0 r^2} dr
+\]
+\[
+= -\frac{\rho}{3\epsilon_0} \int_{R_1}^{R_2} \left(r - \frac{R_1^3}{r^2}\right) dr
+\]
+\[
+= -\frac{\rho}{3\epsilon_0} \left[\frac{r^2}{2} + \frac{R_1^3}{r}\right]_{R_1}^{R_2}
+\]
+\[
+V(0) = \boxed{-\frac{\rho}{3\epsilon_0}\left(\frac{R_2^2}{2} + \frac{R_1^3}{R_2} - \frac{3R_1^2}{2}\right)}
+\]
+
+So,
+\begin{itemize}
+   \item \textbf{Electrostatic energy of the system:}
+\[
+U = \boxed{\frac{2\pi\rho^2}{9\epsilon_0}\left(\frac{R_2^5-R_1^5}{5} - R_1^3(R_2^2-R_1^2) - R_1^6\left(\frac{1}{R_2}-\frac{1}{R_1}\right)\right)}
+\]
+
+\item \textbf{Potential at the center:}
+\[
+V(0) = \boxed{-\frac{\rho}{3\epsilon_0}\left(\frac{R_2^2}{2} + \frac{R_1^3}{R_2} - \frac{3R_1^2}{2}\right)}
+\]
+\end{itemize}
+\end{tcolorbox}
+\begin{tcolorbox}[colframe=myred, colback=myred!10, sharp corners=south, width=0.95\textwidth, boxrule=0.8mm, breakable]
+    \textbf{Q6: A sphere of radius $R_1$ has charge density $\rho$ uniform within its volume, except for a small spherical hollow region of radius $R_2$ located at distance $a$ from the center.
+\begin{enumerate}[label=\alph*)]
+\item Find the field $\vec{E}$ at the center of the hollow sphere.
+\item  Find the potential $\phi$ at the same point.
+\end{enumerate}}
+\end{tcolorbox}
+\begin{figure}[!ht]
+\centering
+\resizebox{0.4\textwidth}{!}{%
+\begin{circuitikz}
+\tikzstyle{every node}=[font=\LARGE]
+\draw [ fill={rgb,255:red,235; green,175; blue,10} ] (13.75,12.25) circle (6.25cm);
+\draw [ fill={rgb,255:red,12; green,181; blue,237} ] (16.25,14.5) circle (1.5cm);
+\node at (13.75,12.25) [circ] {};
+\node at (16.25,14.5) [circ] {};
+\draw [<->, >=Stealth] (13.75,12.25) -- (17,7);
+\draw [<->, >=Stealth] (13.75,12.25) -- (16.25,14.5);
+\draw [<->, >=Stealth] (16.25,14.5) -- (17.75,14.5);
+\node [font=\LARGE] at (15.75,10) {$R_1$};
+\node [font=\LARGE] at (17,14) {$R_2$};
+\node [font=\LARGE] at (14.5,13.5) {a};
+\end{circuitikz}
+}%
+
+\label{fig:my_label}
+\end{figure}
+\begin{tcolorbox}[
+    title=Solution,
+    colback=white,
+    colframe=myblue,
+    coltitle=black,
+    fonttitle=\bfseries\large,
+    breakable,
+    enhanced,
+    attach boxed title to top center={yshift=-2mm},
+    boxed title style={colback=myblue!20, colframe=myblue}
+]
+The diagram above clearly illustrates the situation. \\ 
+Now, for a solid sphere of radius \( R \) with uniform charge density \( \rho \):
+
+\begin{itemize}
+    \item \textbf{Electric Field} at distance \( r \) from center:
+    \[
+    \vec{E}(r) = \begin{cases}
+        \frac{\rho r}{3\epsilon_0}  \hat{r} & \text{(inside, } r \leq R) \\
+        \frac{Q}{4\pi\epsilon_0 r^2} \hat{r} & \text{(outside, } r > R)
+    \end{cases}
+    \]
+    where \( Q = \frac{4}{3}\pi R^3 \rho \).
+
+    \item \textbf{Potential} at distance \( r \) from center (assuming \( \phi(\infty) = 0 \)):
+    \[
+    \phi(r) = \begin{cases}
+        \frac{\rho}{2\epsilon_0} \left( R^2 - \frac{r^2}{3} \right) & \text{(inside)} \\
+        \frac{Q}{4\pi\epsilon_0 r} & \text{(outside)}
+    \end{cases}
+    \]
+\end{itemize}
+\begin{enumerate}[label=\alph*)]
+\item Electric Field at the Center of the Hollow Sphere
+\begin{enumerate}
+    \item \textbf{Superposition Principle:} \\
+    The system can be decomposed into:
+    \begin{itemize}
+        \item A solid sphere of radius \( R_1 \) with uniform charge density \( \rho \).
+        \item A smaller sphere of radius \( R_2 \) with charge density \( -\rho \) (representing the hollow), centered at displacement \( \vec{a} \).
+    \end{itemize}
+
+    \item \textbf{Electric Field Due to the Solid Sphere:} \\
+    Using Gauss's law, the field inside a uniformly charged sphere at distance \( a \) is:
+    \[
+    \vec{E}_{\text{solid}} = \frac{\rho}{3\epsilon_0} \vec{a}.
+    \]
+
+    \item \textbf{Electric Field Due to the Hollow Sphere:} \\
+    The field at the center of a uniformly charged spherical shell is zero:
+    \[
+    \vec{E}_{\text{hollow}} = \vec{0}.
+    \]
+
+    \item \textbf{Total Electric Field:} \\
+    By superposition:
+    \[
+    \vec{E} = \vec{E}_{\text{solid}} + \vec{E}_{\text{hollow}} = \frac{\rho}{3\epsilon_0} \vec{a}.
+    \]
+\end{enumerate}
+\[
+\boxed{\vec{E} = \dfrac{\rho}{3\epsilon_0} \vec{a}}
+\]
+\item The potential $\phi$ at the same point
+\begin{enumerate}
+    \item \textbf{Potential Due to the Solid Sphere:} \\
+    The potential inside a uniformly charged sphere at distance \( a \) is:
+    \[
+    \phi_{\text{solid}} = \frac{\rho}{2\epsilon_0} \left( R_1^2 - \frac{a^2}{3} \right).
+    \]
+
+    \item \textbf{Potential Due to the Hollow Sphere:} \\
+    The potential at the center of a uniformly charged (negative density) sphere is:
+    \[
+    \phi_{\text{hollow}} = \frac{-\rho R_2^2}{2\epsilon_0}.
+    \]
+
+    \item \textbf{Total Potential:} \\
+    By superposition:
+    \[
+    \phi = \phi_{\text{solid}} + \phi_{\text{hollow}} = \frac{\rho}{2\epsilon_0} \left( R_1^2 - \frac{a^2}{3} - R_2^2 \right).
+    \]
+\end{enumerate}
+
+\[
+\boxed{\phi = \dfrac{\rho}{2\epsilon_0} \left( R_1^2 - \dfrac{a^2}{3} - R_2^2 \right)}
+\]
+\end{enumerate}
+\end{tcolorbox}
+
+\end{document}
+
+

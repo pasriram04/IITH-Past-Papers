@@ -1,0 +1,69 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{import}\PYG{+w}{ }\PYG{n+nn}{numpy}\PYG{+w}{ }\PYG{k}{as}\PYG{+w}{ }\PYG{n+nn}{np}
+\PYG{k+kn}{import}\PYG{+w}{ }\PYG{n+nn}{matplotlib}\PYG{n+nn}{.}\PYG{n+nn}{pyplot}\PYG{+w}{ }\PYG{k}{as}\PYG{+w}{ }\PYG{n+nn}{plt}  \PYG{c+c1}{\PYGZsh{} Import required libraries}
+
+\PYG{c+c1}{\PYGZsh{} Constants}
+\PYG{n}{k} \PYG{o}{=} \PYG{l+m+mf}{9e9}  \PYG{c+c1}{\PYGZsh{} Coulomb\PYGZsq{}s constant (N·m²/C²)}
+
+\PYG{c+c1}{\PYGZsh{} Define charge positions and values based on the given image}
+\PYG{n}{charges} \PYG{o}{=} \PYG{p}{[}
+    \PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,}   \PYG{c+c1}{\PYGZsh{} Charge of +1C at (0,1)}
+    \PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,}  \PYG{c+c1}{\PYGZsh{} Charge of +1C at (0,\PYGZhy{}1)}
+    \PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{,}  \PYG{c+c1}{\PYGZsh{} Charge of \PYGZhy{}1C at (1,0)}
+    \PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} Charge of \PYGZhy{}1C at (\PYGZhy{}1,0)}
+\PYG{p}{]}
+
+\PYG{c+c1}{\PYGZsh{} Define a grid of points where we will compute the electric field}
+\PYG{n}{x\PYGZus{}vals} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{linspace}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{l+m+mi}{20}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} X\PYGZhy{}coordinates from \PYGZhy{}2 to 2 with 20 points}
+\PYG{n}{y\PYGZus{}vals} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{linspace}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{l+m+mi}{20}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} Y\PYGZhy{}coordinates from \PYGZhy{}2 to 2 with 20 points}
+\PYG{n}{X}\PYG{p}{,} \PYG{n}{Y} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{meshgrid}\PYG{p}{(}\PYG{n}{x\PYGZus{}vals}\PYG{p}{,} \PYG{n}{y\PYGZus{}vals}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} Create a 2D grid of points}
+
+\PYG{c+c1}{\PYGZsh{} Initialize electric field components (Ex, Ey) as zero arrays}
+\PYG{n}{Ex} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n}{X}\PYG{o}{.}\PYG{n}{shape}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} X\PYGZhy{}component of electric field}
+\PYG{n}{Ey} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n}{Y}\PYG{o}{.}\PYG{n}{shape}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} Y\PYGZhy{}component of electric field}
+
+\PYG{c+c1}{\PYGZsh{} Loop through each charge to compute its contribution to the field}
+\PYG{k}{for} \PYG{p}{(}\PYG{n}{xq}\PYG{p}{,} \PYG{n}{yq}\PYG{p}{,} \PYG{n}{q}\PYG{p}{)} \PYG{o+ow}{in} \PYG{n}{charges}\PYG{p}{:}
+    \PYG{n}{dx} \PYG{o}{=} \PYG{n}{X} \PYG{o}{\PYGZhy{}} \PYG{n}{xq}  \PYG{c+c1}{\PYGZsh{} X\PYGZhy{}distance from charge to grid points}
+    \PYG{n}{dy} \PYG{o}{=} \PYG{n}{Y} \PYG{o}{\PYGZhy{}} \PYG{n}{yq}  \PYG{c+c1}{\PYGZsh{} Y\PYGZhy{}distance from charge to grid points}
+    \PYG{n}{r} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{n}{dx}\PYG{o}{*}\PYG{o}{*}\PYG{l+m+mi}{2} \PYG{o}{+} \PYG{n}{dy}\PYG{o}{*}\PYG{o}{*}\PYG{l+m+mi}{2}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} Compute the Euclidean distance from charge}
+
+    \PYG{n}{r}\PYG{p}{[}\PYG{n}{r} \PYG{o}{\PYGZlt{}} \PYG{l+m+mf}{0.2}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mf}{0.2}  \PYG{c+c1}{\PYGZsh{} Prevent division by zero by setting a minimum radius}
+
+    \PYG{c+c1}{\PYGZsh{} Compute the magnitude of the electric field using Coulomb’s law: E = kq / r²}
+    \PYG{n}{E} \PYG{o}{=} \PYG{n}{k} \PYG{o}{*} \PYG{n}{q} \PYG{o}{/} \PYG{n}{r}\PYG{o}{*}\PYG{o}{*}\PYG{l+m+mi}{2}
+
+    \PYG{c+c1}{\PYGZsh{} Compute the electric field components Ex and Ey}
+    \PYG{n}{Ex} \PYG{o}{+}\PYG{o}{=} \PYG{n}{E} \PYG{o}{*} \PYG{p}{(}\PYG{n}{dx} \PYG{o}{/} \PYG{n}{r}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} Contribution of this charge to the Ex field}
+    \PYG{n}{Ey} \PYG{o}{+}\PYG{o}{=} \PYG{n}{E} \PYG{o}{*} \PYG{p}{(}\PYG{n}{dy} \PYG{o}{/} \PYG{n}{r}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} Contribution of this charge to the Ey field}
+
+\PYG{c+c1}{\PYGZsh{} Normalize field vectors for better visualization (scale all vectors to}
+\PYG{n}{unit} \PYG{n}{length}\PYG{p}{)}
+\PYG{n}{magnitude} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{n}{Ex}\PYG{o}{*}\PYG{o}{*}\PYG{l+m+mi}{2} \PYG{o}{+} \PYG{n}{Ey}\PYG{o}{*}\PYG{o}{*}\PYG{l+m+mi}{2}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} Compute field magnitude}
+\PYG{n}{Ex} \PYG{o}{/}\PYG{o}{=} \PYG{n}{magnitude}  \PYG{c+c1}{\PYGZsh{} Normalize Ex}
+\PYG{n}{Ey} \PYG{o}{/}\PYG{o}{=} \PYG{n}{magnitude}  \PYG{c+c1}{\PYGZsh{} Normalize Ey}
+
+\PYG{c+c1}{\PYGZsh{} Plot the electric field using quiver plot (vector arrows)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{figure}\PYG{p}{(}\PYG{n}{figsize}\PYG{o}{=}\PYG{p}{(}\PYG{l+m+mi}{6}\PYG{p}{,} \PYG{l+m+mi}{6}\PYG{p}{)}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} Set figure size}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{quiver}\PYG{p}{(}\PYG{n}{X}\PYG{p}{,} \PYG{n}{Y}\PYG{p}{,} \PYG{n}{Ex}\PYG{p}{,} \PYG{n}{Ey}\PYG{p}{,} \PYG{n}{color}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{b}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{scale}\PYG{o}{=}\PYG{l+m+mi}{20}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} Plot electric field vectors}
+
+\PYG{c+c1}{\PYGZsh{} Plot the charge locations with colors (Red for +1C, Blue for \PYGZhy{}1C)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{scatter}\PYG{p}{(}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{red}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{red}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{blue}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{blue}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{,}
+\PYG{n}{s}\PYG{o}{=}\PYG{l+m+mi}{100}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Charges}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Label axes}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{xlabel}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{x}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{ylabel}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{y}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Set title for the plot}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{title}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Electric Field of Given Charge Distribution}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Show legend}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{legend}\PYG{p}{(}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Display grid for reference}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{grid}\PYG{p}{(}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Show the plot}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{show}\PYG{p}{(}\PYG{p}{)}
+\end{MintedVerbatim}
