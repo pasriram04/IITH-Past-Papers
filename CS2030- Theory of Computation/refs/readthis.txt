@@ -1,0 +1,4 @@
+Sipser- Introduction to the Theory of Computation.
+Kozen- Automata and Computability
+Hopcroft, Ullman, Motwani- Introdution to Automata Theory, Languages and Computation.
+Ask me if you want solutions.
